@@ -1,6 +1,6 @@
 import React from "react";
 import expect from "expect";
-import { shallow } from "enzyme";
+import { render } from "enzyme";
 import getDisplayName from "../src/get-display-name";
 import { withGuards } from "../src/with-guards";
 
@@ -15,10 +15,10 @@ describe("withGuards", () => {
     it("Executes the guards", () => {
       expect(() => {
         const EnhancedComponent = withGuards((props, guard) => {
-          guard(true, "error");
+          guard(false, "error");
         })(Component);
-        shallow(<EnhancedComponent />);
-      }).toThrow();
+        render(<EnhancedComponent />);
+      }).toThrow("Broken guard: error");
     });
 
     it("Maintains the wrapped component display name", () => {
@@ -35,7 +35,7 @@ describe("withGuards", () => {
         const EnhancedComponent = withGuards((props, guard) => {
           guard(true, "error");
         })(Component);
-        const comp = shallow(<EhancedComponent />);
+        const comp = render(<EhancedComponent />);
         expect(comp.contains(<div />)).toEqual(true);
       });
     });

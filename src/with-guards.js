@@ -5,9 +5,9 @@ import getDisplayName from "./get-display-name";
 export const withGuards = fn => WrappedComponent => {
   class WithGuards extends Component {
     render() {
-      guards(guard => fn(props, guard));
+      guards(guard => fn(this.props, guard));
 
-      return <WrappedComponent {...props} />;
+      return <WrappedComponent {...this.props} />;
     }
   }
   WithGuards.displayName = getDisplayName(WrappedComponent);
